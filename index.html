@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Endfield Gacha Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'HarmonyOS Sans SC', system-ui, sans-serif;
+      background: #fff;
+      color: #2a2a2a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #app {
+      width: 96vw;
+      padding: 28px 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0px;
+      color: #1a1a1a;
+    }
+
+    #controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    #controls label {
+      font-size: 13px;
+      color: #6a6a6a;
+      cursor: pointer;
+      padding: 6px 14px;
+      border: 1px solid #d0d0d0;
+      /* border-radius: 4px; */
+      transition: border-color .2s;
+    }
+
+    #controls label:hover {
+      border-color: #c9a84c;
+      color: #a08530;
+    }
+
+    #controls input[type=file] {
+      display: none;
+    }
+
+    .toggle-btn {
+      --fill: 0%;
+      position: relative;
+      overflow: hidden;
+      font-size: 13px;
+      color: #6a6a6a;
+      cursor: pointer;
+      padding: 6px 14px;
+      border: 1px solid #d0d0d0;
+      background: #fff;
+      transition: border-color .25s ease, color .25s ease;
+    }
+
+    .toggle-btn::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: var(--fill);
+      background: #111;
+      transition: width .34s cubic-bezier(0.22, 0.61, 0.36, 1);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .toggle-btn .toggle-label {
+      position: relative;
+      z-index: 1;
+      transition: color .25s ease;
+    }
+
+    .toggle-btn.is-active {
+      border-color: #111;
+      color: #fff;
+    }
+
+    .toggle-btn:hover {
+      border-color: #111;
+    }
+
+    #info {
+      font-size: 12px;
+      color: #999;
+      font-variant-numeric: tabular-nums;
+    }
+
+    #chart-wrap {
+      position: relative;
+      height: calc(100vh - 120px);
+      min-height: 400px;
+      max-height: 600px;
+      background: #ffffff;
+      border: 1px solid #d0d0d0;
+      /* border-radius: 6px; */
+      padding: 16px 12px 8px;
+    }
+
+    .corner-bars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .corner-bars div {
+      width: 3px;
+      height: 40px;
+    }
+
+    @media (max-width: 768px) {
+      #app {
+        width: 100vw;
+        padding: 12px 0 10px;
+        gap: 8px;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 0 8px;
+      }
+
+      header h1 {
+        font-size: 18px;
+      }
+
+      #chart-wrap {
+        height: calc(100vh - 90px);
+        min-height: 280px;
+        padding: 10px 4px 4px;
+      }
+
+      #controls label {
+        font-size: 12px;
+        padding: 4px 10px;
+      }
+
+      #info {
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 15px;
+      }
+
+      #chart-wrap {
+        padding: 8px 2px 2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 18px; color: #919191;">
+        <span>[</span>
+        <h1>明日方舟终末地 · 寻访概率分布</h1>
+        <span>]</span>
+      </div>
+      <div id="controls">
+        <span id="info"></span>
+        <button id="toggle-tokens-btn" class="toggle-btn"><span class="toggle-label">隐藏信物</span></button>
+        <button id="toggle-higher-btn" class="toggle-btn"><span class="toggle-label">隐藏更高潜能</span></button>
+        <label>导入数据<input type="file" id="file-input" accept=".txt"></label>
+      </div>
+    </header>
+    <div id="chart-wrap">
+      <div class="corner-bars">
+        <div style="background:#FF00F0"></div>
+        <div style="background:#FFFA00"></div>
+        <div style="background:#00FFA2"></div>
+      </div>
+      <canvas id="chart"></canvas>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
