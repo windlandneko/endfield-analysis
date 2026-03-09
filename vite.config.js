@@ -11,5 +11,5 @@ export default defineConfig({
       },
     },
   },
-  base: 'https://endfield.windlandneko.com/analysis/',
+  base: 'https://endfield.windlandneko.com/',
 })
